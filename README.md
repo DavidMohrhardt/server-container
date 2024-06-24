@@ -14,9 +14,9 @@ Values can be passed into the server configuration file via environment variable
 
 On startup the container will look for any environment variables prefixed by `TES3MP_SERVER_` and attempt to update them on `tes3mp-server-default.cfg`.
 
-Environment variables should be represented as uppercase snake case.
+Syntax: `TES3MP_SERVER_<section>_<variable>`
 
-For example `TES3MP_SERVER_MAXIMUM_PLAYERS` correlates to `maximumPlayers` in the configuration file.
+For example `TES3MP_SERVER_GENERAL_MAXIMUM_PLAYERS` correlates to `[General] maximumPlayers` in the configuration file.
 
 ## Getting the image
 
@@ -54,7 +54,7 @@ Replace the path described at the `-v` (volume) argument to a directory on your 
 ```bash
 docker run -it \
     --name TES3MP-server \
-    -e TES3MP_SERVER_HOSTNAME="Containerized TES3MP Server" \
+    -e TES3MP_SERVER_GENERAL_HOSTNAME="Containerized TES3MP Server" \
     -v "$HOME/TES3MP/data:/server/data" \
     -p "25565:25565/udp" \
     tes3mp/server
@@ -65,7 +65,7 @@ docker run -it \
 ```bash
 docker run -it \
     --name TES3MP-server \
-    -e TES3MP_SERVER_HOSTNAME="Containerized TES3MP Server" \
+    -e TES3MP_SERVER_GENERAL_HOSTNAME="Containerized TES3MP Server" \
     -v "$HOME/TES3MP/data:/server/data" \
     -p "25565:25565/udp" \
     tes3mp/server:0.6.3
@@ -93,7 +93,7 @@ services:
   server:
     image: "tes3mp/server:0.6.3"
     environment:
-      - TES3MP_SERVER_HOSTNAME="Containerized TES3MP Server"
+      - TES3MP_SERVER_GENERAL_HOSTNAME="Containerized TES3MP Server"
     volumes:
       - "./data:/server/data"
     ports:
@@ -102,7 +102,7 @@ services:
   server-legacy:
     image: "tes3mp/server:0.5.2"
     environment:
-      - TES3MP_SERVER_HOSTNAME="Containerized TES3MP Server (Legacy)"
+      - TES3MP_SERVER_GENERAL_HOSTNAME="Containerized TES3MP Server (Legacy)"
     volumes:
       - "./data-legacy:/server/data"
     ports:
