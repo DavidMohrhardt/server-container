@@ -16,7 +16,7 @@ On startup the container will look for any environment variables prefixed by `TE
 
 Syntax: `TES3MP_SERVER_<section>_<variable>`
 
-For example `TES3MP_SERVER_GENERAL_MAXIMUM_PLAYERS` correlates to `[General] maximumPlayers` in the configuration file.
+For example `TES3MP_SERVER_GENERAL_MAXIMUMPLAYERS` correlates to `[General] maximumPlayers` in the configuration file.
 
 ## Getting the image
 
