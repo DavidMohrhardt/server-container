@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "tes3mp-0.8.1" ]
+  pull_request:
+    branches: [ "tes3mp-0.8.1" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag tes3mp-server:$(date +%s)
+
+    - name: Build and Push to DockerHub
+      # You may pin to the exact commit or the version.
+      # uses: MaximilianoBz/dockerhub-buildpush@372110d600041736063b948d05005b6039d8fb0c
+      uses: MaximilianoBz/dockerhub-buildpush@v1.1
+      with:
+        # Docker Registry Url, eg: docker.io
+        registry_url: docker.io
+        # Docker Image Repository Name, eg: username/demo-app
+        repository_name: axyias/tes3mp-server
+        # Docker Login UserName, from: https://hub.docker.com/
+        user_name: ${{ secrets.DOCKER_USERNAME }}
+        # Docker Login Access Token, from: https://hub.docker.com/
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        # Image Build Version
+        image_version: 0
+        # Docker File Directory, Default Current Directory (.)
+        docker_file: .
+          

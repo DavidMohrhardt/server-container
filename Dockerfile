@@ -5,6 +5,8 @@ ENV TES3MP_VERSION_STRING 0.47.0\\n68954091c54d0596037c4fb54d2812313b7582a1
 
 ARG BUILD_THREADS="4"
 
+RUN sed -i 's/https/http/' /etc/apk/repositories
+
 RUN apk add --no-cache \
     libgcc \
     libstdc++ \
@@ -22,6 +24,7 @@ RUN apk add --no-cache \
     sdl2-dev \
     bash \
     git \
+    curl \
     wget
 
 RUN git clone --depth 1 -b "${TES3MP_VERSION}" https://github.com/TES3MP/TES3MP.git /tmp/TES3MP \
@@ -31,7 +34,6 @@ RUN git clone --depth 1 -b "${TES3MP_VERSION}" https://github.com/TES3MP/TES3MP.
 
 RUN cd /tmp/CrabNet \
     && git reset --hard origin/master \
-    && git checkout 19e66190e83f53bcdcbcd6513238ed2e54878a21 \
     && cmake -DCMAKE_BUILD_TYPE=Release .\
     && cmake --build . --target RakNetLibStatic --config Release -- -j ${BUILD_THREADS}
 
@@ -69,10 +71,12 @@ RUN mv /tmp/TES3MP/build /server \
     && cp /tmp/TES3MP/tes3mp-credits.md /server/ \
     && mkdir /server/data
 
-FROM alpine:3.10
+FROM alpine:edge
 
 LABEL maintainer="Grim Kriegor <grimkriegor@krutt.org>"
 LABEL description="Docker image for the TES3MP server"
+
+RUN sed -i 's/https/http/' /etc/apk/repositories
 
 RUN apk add --no-cache \
         libgcc \

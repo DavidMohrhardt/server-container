@@ -1,5 +1,3 @@
----
-
 # Derivative of the following pipeline by Lars Kellogg-Stedman
 # https://github.com/larsks/hello-flask
 # GPLv3
@@ -13,7 +11,7 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
 
       - name: Checkout
